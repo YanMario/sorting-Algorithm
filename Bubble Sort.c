@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+//由小到大进行排序 时间复杂度为o(n平方)
 bool Bubble_Sort(int *arr,int len)
 {
     if(len <= 0)
@@ -16,9 +17,9 @@ bool Bubble_Sort(int *arr,int len)
     {
         for(j=i+1; j<len; ++j)
         {
-            if(arr[i] > arr[j])
+            if(arr[i] > arr[j])     //如果arr[i] 大于 arr[j] 则进行值交换
             {
-                temp = arr[i];
+                temp = arr[i]; 
                 arr[i] = arr[j];
                 arr[j] = temp;
             }
