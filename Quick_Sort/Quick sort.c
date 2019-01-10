@@ -10,7 +10,7 @@
 int AdjustArr(int *arr,int left, int right)
 {
     //对参数进行判断，防止对空数组进行操作
-    if(arr == NULL)
+    if(arr == NULL || left < 0 || right <= 0 || left > right)
         return -1;
     int i = left;
     int j = right;
@@ -48,6 +48,8 @@ int AdjustArr(int *arr,int left, int right)
 //递归函数进行排序 分治算法的思想
 void Quick_Sort(int *arr, int left, int right)
 {
+		if(arr == NULL || left < 0 || right <= 0 || left>right)
+				return;
     //递归完成之后一层一层返回
     if(left < right)
     {
