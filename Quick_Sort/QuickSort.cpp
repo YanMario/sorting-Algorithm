@@ -1,9 +1,15 @@
 //
+// Created by yanpan on 2019/1/10.
+//
+
+//
 // Created by yanpan on 2019/1/9.
 //
 
-#if 0
-#include <stdio.h>
+#if 1
+#include <iostream>
+#include <stack>
+using namespace std;
 
 //写法一： 好理解一点
 //找到基数，并进行填坑调整位置，使得调整后的数组在基数右边的数字元素小于基数，左边反之
@@ -45,49 +51,42 @@ int AdjustArr(int *arr,int left, int right)
     return i;
 }
 
-//递归函数进行排序 分治算法的思想
-void Quick_Sort(int *arr, int left, int right)
+//非递归的快排,运用栈的特性  时间复杂度为O(N*logN)
+void QuickSort(int *arr, int left, int right)
 {
-		if(arr == NULL || left < 0 || right <= 0 || left>right)
-				return;
-    //递归完成之后一层一层返回
-    if(left < right)
-    {
-        int i = AdjustArr(arr, left, right);
-        Quick_Sort(arr, left, i - 1);
-        Quick_Sort(arr, i + 1, right);
-    }
-}
-
-//写法二：代码更简洁
-
-void Quick_Sort1(int *arr, int left, int right)
-{
-    if(arr == NULL)
+    //对参数进行判断，防止对空数组进行操作
+    if(arr == NULL || left < 0 || right <= 0 || left > right)
         return;
-    if(left < right)
+    int i,j;
+    stack<int> vec1;
+    vec1.push(right);  //先右后左
+    vec1.push(left);
+    //栈空则跳出while循环，则整个数组排好顺序
+    while(!vec1.empty())
     {
-        int i = left, j = right, car_num = arr[left];
-        while(i < j)
+        i = vec1.top(); //left
+        vec1.pop();
+        j = vec1.top(); //right
+        vec1.pop();
+        if(i < j)
         {
-            while(i < j && arr[j] > car_num)
-                j--;
-            if(i < j)
+            //找到中间的k值
+            int k = AdjustArr(arr, i, j);
+            if(k > i)
             {
-                arr[i++] = arr[j];
+                //将k下标左边的数组入栈然后进行排序
+                vec1.push(k - 1);
+                vec1.push(i);
             }
-
-            while(i < j && arr[i] < car_num)
-                ++i;
-            if(i < j)
+            if(k < j)
             {
-                arr[j--] = arr[i];
+                //将k下标左边的数组入栈然后进行排序
+                vec1.push(j);
+                vec1.push(k + 1);
             }
 
         }
-        arr[i] = car_num;
-        Quick_Sort1(arr,left,i-1);
-        Quick_Sort1(arr,i+1,right);
+
     }
 }
 
@@ -105,16 +104,16 @@ void show(int *arr,int len)
     return;
 }
 
-
-
 int main()
 {
     int arr[10] = {72,6,57,88,60,42,83,73,48,85};
     int right = sizeof(arr)/sizeof(arr[0]);
     int left = 0;
-    Quick_Sort1(arr, left, right-1);
+    QuickSort(arr, left, right-1);
     show(arr,right);
     return 0;
 }
+
+
 
 #endif
