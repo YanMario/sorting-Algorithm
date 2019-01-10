@@ -2,14 +2,39 @@
 // Created by yanpan on 2019/1/10.
 //
 
-//
-// Created by yanpan on 2019/1/9.
-//
-
-#if 0
+#if 1
 #include <iostream>
 #include <stack>
 using namespace std;
+
+
+//返回三数中第二小的数的下标
+int Mid_Num(int *arr, int i, int j)
+{
+    int mid = i + ((j-i)>>1);
+    if(arr[i] >= arr[mid] && arr[i] >= arr[j])
+    {
+        if(arr[mid] >= arr[j])
+            return mid;
+        else
+            return j;
+    }
+    if(arr[mid] >= arr[i] && arr[mid] >= arr[j])
+    {
+        if(arr[i] >= arr[j])
+            return i;
+        else
+            return j;
+    }
+    if(arr[j] >= arr[mid] && arr[j] >= arr[i])
+    {
+        if(arr[mid] >= arr[i])
+            return mid;
+        else
+            return i;
+    }
+
+}
 
 //写法一： 好理解一点
 //找到基数，并进行填坑调整位置，使得调整后的数组在基数右边的数字元素小于基数，左边反之
@@ -21,8 +46,12 @@ int AdjustArr(int *arr,int left, int right)
     int i = left;
     int j = right;
 
-    //基数 car_num
-    int car_num = arr[left];
+    //防止复杂度达到最坏的情况，所以去了中数
+    int mid = Mid_Num(arr,i,j);
+
+    int car_num = arr[mid];
+    arr[mid] = arr[i];
+    arr[i] = car_num;
     while(i < j)
     {
         //从左边开始找，找到比基数小的元素 并将元素调整到右边的坑中
