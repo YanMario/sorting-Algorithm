@@ -5,7 +5,7 @@
 #if 0
 #include <stdio.h>
 
-//进行堆调整
+//进行堆调整   //时间复杂度为 o(log n)
 void MaxHeap_Adjust(int *arr, int start, int len)
 {
     int temp;
@@ -35,11 +35,11 @@ void MaxHeap_Adjust(int *arr, int start, int len)
 
 void MaxHeap_Sort(int *arr, int len)
 {
-    //建立大根堆
+    //建立大根堆  时间复杂度为o(n)
     for(int start = (len - 1) / 2; start >= 0; start--)
         MaxHeap_Adjust(arr,start,len);
 
-    //取出最大的数字，并进行堆调整
+    //取出最大的数字，并进行堆调整   时间复杂度为o(n)
     int temp;
     while(len >= 0)
     {
@@ -69,6 +69,7 @@ int main()
 {
     int arr[] = {10, 40, 22, 2, 66, 3, 45, 56, 390, 453, 223, 99};
     int len = sizeof(arr)/sizeof(arr[0]);
+    //程序的总时间复杂度为o(nlogn)
     MaxHeap_Sort(arr, len-1);
     Show(arr,len);
     return 0;
