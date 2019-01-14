@@ -5,6 +5,7 @@
 //运用分治法的思想，将数组以中心坐标点分成两部分，左右两边的数组继续以它们的中心进行分组
 // 直到数组只有一个元素时递归返回，进行排序
 //两个有序的数组合并为一个有序的数组
+//时间复杂度 O(NlogN)
 
 
 #include <stdio.h>
@@ -17,7 +18,7 @@ void MergeArr(int *arr, int start, int mid, int len, int *brr)
         return;
     int i = start, k = 0;
     int j = mid+1;
-    //将相邻的两个有序的序列合并为一个有序的序列
+    //将相邻的两个有序的序列合并为一个有序的序列, 时间复杂度O(N)
     while(i <= mid && j <= len)
     {
         if(arr[i] >= arr[j])
@@ -46,7 +47,7 @@ void MergeSort(int *arr, int start, int len, int *brr)
     if(arr == NULL)
         return;
 
-    //进行递归，直到小数组只有一个元素的时候递归结束
+    //进行递归，直到小数组只有一个元素的时候递归结束  时间复杂度O(logN)
     if(start < len)
     {
         MergeSort(arr, start, mid, brr);
